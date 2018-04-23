@@ -18,20 +18,11 @@ namespace ParkingLotDB
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DBConnection()
+        public DBConnection(string connectionString)
         {
             if(conn == null)
             {
-                conn = new SqlConnection(
-                    "Data Source=(localdb)\\MSSQLLocalDB;" +
-                    "Initial Catalog=Test;" +
-                    "Integrated Security=True;" +
-                    "Connect Timeout=30;" +
-                    "Encrypt=False;" +
-                    "TrustServerCertificate=False;" +
-                    "ApplicationIntent=ReadWrite;" +
-                    "MultiSubnetFailover=False"
-                    );
+                conn = new SqlConnection(connectionString);
             }
             if(conn.State == ConnectionState.Closed)
             {
@@ -44,11 +35,11 @@ namespace ParkingLotDB
         /// </summary>
         /// <param name="sql">The query statement.</param>
         /// <returns>The dataset you want.</returns>
-        public DataSet DBQuery(string sql)
+        public DataSet DBQuery(string sql, string srcTable)
         {
             DataSet ds = new DataSet();
             SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-            da.Fill(ds);
+            da.Fill(ds, srcTable);
             return ds;
         }
 
@@ -59,9 +50,8 @@ namespace ParkingLotDB
         /// <returns>The number of records.</returns>
         public int DBQueryCount(string sql)
         {
-            DataSet ds = new DataSet();
             SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-            return da.Fill(ds);
+            return da.Fill(new DataSet());
         }
 
         /// <summary>
@@ -80,8 +70,7 @@ namespace ParkingLotDB
                 // Set the connection.
                 Connection = conn
             };
-            int x = oc.ExecuteNonQuery();
-            return x;
+            return oc.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -89,7 +78,7 @@ namespace ParkingLotDB
         /// </summary>
         public void Close()
         {
-            if(conn.State == ConnectionState.Open)
+            if (conn.State == ConnectionState.Open)
             {
                 conn.Close();
             }

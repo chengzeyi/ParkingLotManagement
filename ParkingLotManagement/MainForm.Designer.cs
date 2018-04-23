@@ -154,7 +154,6 @@
             this.textBoxEnteringCar.Name = "textBoxEnteringCar";
             this.textBoxEnteringCar.Size = new System.Drawing.Size(434, 28);
             this.textBoxEnteringCar.TabIndex = 1;
-            this.textBoxEnteringCar.Text = "Type the plate number of the entering car here.";
             // 
             // textBoxLeftingCar
             // 
@@ -162,7 +161,6 @@
             this.textBoxLeftingCar.Name = "textBoxLeftingCar";
             this.textBoxLeftingCar.Size = new System.Drawing.Size(434, 28);
             this.textBoxLeftingCar.TabIndex = 2;
-            this.textBoxLeftingCar.Text = "Type the plate number of the lefting car here.";
             // 
             // buttonEnter
             // 
@@ -172,6 +170,7 @@
             this.buttonEnter.TabIndex = 3;
             this.buttonEnter.Text = "Enter";
             this.buttonEnter.UseVisualStyleBackColor = true;
+            this.buttonEnter.Click += new System.EventHandler(this.ButtonEnter_Click);
             // 
             // buttonLeft
             // 
@@ -181,6 +180,7 @@
             this.buttonLeft.TabIndex = 4;
             this.buttonLeft.Text = "Left";
             this.buttonLeft.UseVisualStyleBackColor = true;
+            this.buttonLeft.Click += new System.EventHandler(this.ButtonLeft_Click);
             // 
             // MainForm
             // 
