@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserIdentificationForm));
             this.buttonSignIn = new System.Windows.Forms.Button();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxPwd = new System.Windows.Forms.TextBox();
@@ -37,10 +38,11 @@
             // 
             // buttonSignIn
             // 
+            this.buttonSignIn.Font = new System.Drawing.Font("Arial Unicode MS", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSignIn.Location = new System.Drawing.Point(95, 351);
             this.buttonSignIn.Name = "buttonSignIn";
-            this.buttonSignIn.Size = new System.Drawing.Size(106, 30);
-            this.buttonSignIn.TabIndex = 0;
+            this.buttonSignIn.Size = new System.Drawing.Size(113, 37);
+            this.buttonSignIn.TabIndex = 2;
             this.buttonSignIn.Text = "Sign In";
             this.buttonSignIn.UseVisualStyleBackColor = true;
             this.buttonSignIn.Click += new System.EventHandler(this.ButtonSignIn_Click);
@@ -49,15 +51,16 @@
             // 
             this.textBoxUsername.Location = new System.Drawing.Point(95, 152);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(363, 28);
-            this.textBoxUsername.TabIndex = 1;
+            this.textBoxUsername.Size = new System.Drawing.Size(363, 32);
+            this.textBoxUsername.TabIndex = 0;
             // 
             // textBoxPwd
             // 
             this.textBoxPwd.Location = new System.Drawing.Point(95, 265);
             this.textBoxPwd.Name = "textBoxPwd";
-            this.textBoxPwd.Size = new System.Drawing.Size(363, 28);
-            this.textBoxPwd.TabIndex = 2;
+            this.textBoxPwd.Size = new System.Drawing.Size(363, 32);
+            this.textBoxPwd.TabIndex = 1;
+            this.textBoxPwd.UseSystemPasswordChar = true;
             // 
             // labelUsername
             // 
@@ -82,14 +85,16 @@
             // UserIdentificationForm
             // 
             this.AcceptButton = this.buttonSignIn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(539, 452);
             this.Controls.Add(this.labelPwd);
             this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.textBoxPwd);
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.buttonSignIn);
+            this.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserIdentificationForm";
             this.Text = "User Identification";
             this.Load += new System.EventHandler(this.UserIdentificationForm_Load);

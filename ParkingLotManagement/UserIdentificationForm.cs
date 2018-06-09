@@ -11,69 +11,75 @@ using ParkingLotDB;
 
 namespace ParkingLotManagement
 {
+    /// <summary>
+    /// Control the user identification form and its procedure.
+    /// </summary>
     public partial class UserIdentificationForm : Form
     {
-        private string connectionString =
-            "Data Source=(localdb)\\MSSQLLocalDB;" +
-            "Initial Catalog=Test;" +
-            "Integrated Security=True;" +
-            "Connect Timeout=30;" +
-            "Encrypt=False;" +
-            "TrustServerCertificate=False;" +
-            "ApplicationIntent=ReadWrite;" +
-            "MultiSubnetFailover=False";
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public UserIdentificationForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Things to be done when loading user identification form.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         private void UserIdentificationForm_Load(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Action Performed when buttonSignIn Clicked.
+        /// Check if the username and password is correct.
+        /// And if it is, hide this form and start main form.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         private void ButtonSignIn_Click(object sender, EventArgs e)
         {
             // Get the username.
-            string username = this.textBoxUsername.Text.Trim();
+            string username = textBoxUsername.Text.Trim();
             // Get the password.
-            string pwd = this.textBoxPwd.Text.Trim();
+            string pwd = textBoxPwd.Text.Trim();
             // The signal variable to judge whether the
 
             // The username and password are not empty.
             if(username.Length != 0 && pwd.Length != 0)
             {
-                DBConnection dbconn = new DBConnection(this.connectionString);
-                int count = dbconn.DBQueryCount(
+                int count = DBConnection.DBQueryCount(
                     "SELECT username, password\n" +
                     "FROM Register\n" +
                     "WHERE username = '" + username + "'\n" +
                     "AND password = '" + pwd + "'"
                     );
-                dbconn.Close();
                 if (count != 0)
                 {
-                    MessageBox.Show("User Identification succeeded!");
+                    MessageBox.Show("Succeeded to sign in!");
                     // Start the main form and hide this form.
-                    this.Hide();
+                    Hide();
                     MainForm mainForm = new MainForm();
                     mainForm.ShowDialog();
-                    this.Close();
+                    Close();
                 }
                 else
                 {
-                    MessageBox.Show("Incorrect username or password!");
-                //this.textBoxUsername.Clear();
-                this.textBoxPwd.Clear();
+                    MessageBox.Show("Failed to sign in!");
+                    // this.textBoxUsername.Clear();
+                    textBoxPwd.Clear();
                 }
             }
             // The username or password is empty.
             else
             {
                 MessageBox.Show("The username and password cannnot be empty!");
-                //this.textBoxUsername.Clear();
-                this.textBoxPwd.Clear();
+                // this.textBoxUsername.Clear();
+                textBoxPwd.Clear();
             }
         }
     }

@@ -5,28 +5,59 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.Windows.Forms;
 
 namespace ParkingLotDB
 {
     /// <summary>
     /// Control the connection to the database.
     /// </summary>
-    public class DBConnection
+    public static class DBConnection
     {
-        // The object of the connection to the data base.
-        SqlConnection conn = null;
         /// <summary>
-        /// Constructor.
+        /// The connection to the data base.
         /// </summary>
-        public DBConnection(string connectionString)
+        private static SqlConnection conn = null;
+        /// <summary>
+        /// The data adapter used for executing query in
+        /// the data base.
+        /// </summary>
+        private static SqlDataAdapter da = null;
+        /// <summary>
+        /// The commmand used for executing non query operation
+        /// in the data base.
+        /// </summary>
+        private static SqlCommand oc = null;
+        /// <summary>
+        /// The connection string that will be loaded from App.config.
+        /// </summary>
+        private static string connectionString = ConfigurationManager.ConnectionStrings["dBConnection"].ConnectionString;
+
+        /// <summary>
+        /// Open connection.
+        /// </summary>
+        /// <returns>
+        /// If succeeded, return true.
+        /// If failed, return false.
+        /// </returns>
+        private static bool Open()
         {
-            if(conn == null)
+            try
             {
-                conn = new SqlConnection(connectionString);
-            }
-            if(conn.State == ConnectionState.Closed)
+                if (conn == null)
+                {
+                    conn = new SqlConnection(connectionString);
+                }
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                return true;
+            } catch(Exception)
             {
-                conn.Open();
+                MessageBox.Show("Failed to connect to the database!");
+                return false;
             }
         }
 
@@ -34,12 +65,27 @@ namespace ParkingLotDB
         /// Proceed a query in the database.
         /// </summary>
         /// <param name="sql">The query statement.</param>
-        /// <returns>The dataset you want.</returns>
-        public DataSet DBQuery(string sql, string srcTable)
+        /// <param name="srcTable">The source table's name for filling.</param>
+        /// <returns>The data set you want.</returns>
+        public static DataSet DBQuery(string sql, string srcTable)
         {
             DataSet ds = new DataSet();
-            SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-            da.Fill(ds, srcTable);
+            if (Open())
+            {
+                try
+                {
+                    da = new SqlDataAdapter(sql, conn);
+                    da.Fill(ds, srcTable);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failed to query in the database!");
+                }
+                finally
+                {
+                    Close();
+                }
+            }
             return ds;
         }
 
@@ -48,39 +94,85 @@ namespace ParkingLotDB
         /// </summary>
         /// <param name="sql">The query statement.</param>
         /// <returns>The number of records.</returns>
-        public int DBQueryCount(string sql)
+        public static int DBQueryCount(string sql)
         {
-            SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-            return da.Fill(new DataSet());
+            int count = 0;
+            if(Open())
+            {
+                try
+                {
+                    da = new SqlDataAdapter(sql, conn);
+                    count = da.Fill(new DataSet());
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failed to query in the database!");
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+            return count;
         }
 
         /// <summary>
         /// Update the database.
+        /// Return the count of rows that are affected.
         /// </summary>
         /// <param name="sql">The query statement.</param>
         /// <returns>The amount of rows that are affected.</returns>
-        public int DBCmd(string sql)
+        public static int DBCmd(string sql)
         {
-            SqlCommand oc = new SqlCommand
+            int count = 0;
+            if(Open())
             {
-                // The query statement.
-                CommandText = sql,
-                // The command type.
-                CommandType = CommandType.Text,
-                // Set the connection.
-                Connection = conn
-            };
-            return oc.ExecuteNonQuery();
+                try
+                {
+                    oc = new SqlCommand
+                    {
+                        // The query statement.
+                        CommandText = sql,
+                        // The command type.
+                        CommandType = CommandType.Text,
+                        // Set the connection.
+                        Connection = conn
+                    };
+                    count = oc.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failed to execute command in the database!");
+                }
+                finally
+                {
+                    Close();
+                }
+            }
+            return count;
         }
 
         /// <summary>
         /// Close the connection to the database.
         /// </summary>
-        public void Close()
+        /// <returns>
+        /// If succeeded, return true.
+        /// If failed, return false.
+        /// </returns>
+        private static bool Close()
         {
-            if (conn.State == ConnectionState.Open)
+            try
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                return true;
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Failed to close the connection to the database!");
+                return false;
             }
         }
     }

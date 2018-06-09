@@ -6,10 +6,13 @@ using System.Windows.Forms;
 
 namespace ParkingLotManagement
 {
+    /// <summary>
+    /// Contain the main entrance point of the application
+    /// </summary>
     static class Program
     {
         /// <summary>
-        /// 应用程序的主入口点。
+        /// The main entrance point of the application.
         /// </summary>
         [STAThread]
         static void Main()

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="991541c5-d603-4f18-ad64-a640f6f6a693" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>This is the welcome page of the help document, offering basic information of it.</para>
+		</introduction>
+
+		<section>
+			<title>Brief Introduction</title>
+			<content>
+				<para>Parking Lot Management is developed for WHU programming course. It is an easy-to-use software to help the administrator manage the parking lot. This software provides powerful functions for entry register, exit check, record query and statistic. In this help documentation, the main methods an member virables will be introduced in detail.</para>
+			</content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="991541c5-d603-4f18-ad64-a640f6f6a693" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="991541c5-d603-4f18-ad64-a640f6f6a693" visible="True" isDefault="true" isSelected="true" title="Welcome to the Parking Lot Management Developer Help">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Welcome" />
+    </HelpKeywords>
+  </Topic>
+</Topics>
